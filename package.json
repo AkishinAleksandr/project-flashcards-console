@@ -1,0 +1,28 @@
+{
+  "name": "project-flashcards-console",
+  "version": "1.0.0",
+  "description": "## Введение Вам предстоит создать приложение для флэш-карт, которое должно работать как показано на Рисунке 1. Сосредоточьтесь на написании элегантного, объектно-ориентированного кода, не забывая при этом о качественном проектировании и об отборе лучших методов.",
+  "main": "Controller.js",
+  "scripts": {
+    "test": "jest spec/*.js -i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruimage/project-flashcards-console.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruimage/project-flashcards-console/issues"
+  },
+  "homepage": "https://github.com/ruimage/project-flashcards-console#readme",
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
