@@ -12,7 +12,7 @@ class Controller {
     this.view = view;
     this.currentStage = -1;
     this.themes = [];
-    this.score = 0;
+    this.allScore = 0;
     this.themeCountQuestion = 0;
     this.maxScore = 100;
   }
@@ -51,10 +51,15 @@ class Controller {
     const objQuestion = arrRemainQuesh.shift();
     const { question } = objQuestion;
     const answerQ = objQuestion.answer;
+    console.log(question);
 
     readline.question(`${question}`, (answer) => {
       if (answer === answerQ) {
         this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
+      }
+      if (arrRemainQuesh.length === 1) {
+        console.log(this.score);
+        return;
       }
       this.askCurrentQuestion(arrRemainQuesh);
     });
@@ -76,25 +81,9 @@ class Controller {
 
     if (this.currentStage === 0) {
       readline.question('1.Ястребы\n2.Выдры\n3.Еноты\n', (answer) => {
-        if (answer === 1 || answer === 2 || answer === 3) {
-          this.currentStage = answer;
-          this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
-        }
+        this.askCurrentQuestion(this.getArrQuestbyTheme(Number(answer)));
       });
     }
-
-    if (this.currentStage === 1) {
-
-      this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
-    }
-    //
-    // if (this.currentStage === 2) {
-    //   this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
-    // }
-    //
-    // if (this.currentStage === 3) {
-    //   this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
-    // }
   }
 
   getQuestionValue(numberOfQuestions, maxCount) {
@@ -109,9 +98,9 @@ class Controller {
   allScore(countTaskScore, totalTask) {
     const maxScore = countTaskScore * totalTask;
 
-    this.allScore += countTaskScore;
-    if (this.allScore > maxScore) {
-      return error;
+    this.score += countTaskScore;
+    if (this.score > maxScore) {
+      return console.log(this.score)
     }
   }
 }
