@@ -11,15 +11,19 @@ class Controller {
     this.model = model;
     this.view = view;
     this.currentStage = -1;
+    this.themes = [];
   }
 
-  loadQuest() {
+  loadQuest(path) {
     const readFolder = fs.readdir(path, 'utf-8');
-    console.log(readFolder);
-    readFolder.then((data) => Promise.all(
-      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
-    ));
+    return readFolder.then((data) => {
+      return Promise.all(
+        data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))
+      );
+    });
   }
+
+ 
 
   run() {
     // Просим экземпляр класса модели прочитать папку со всеми темами и составить меню.
@@ -45,8 +49,7 @@ class Controller {
         } else if(answer) {
           console.log(`Здравствуйте, ${answer}! Давайте поиграем в викторину. Выберете тему: `);
           this.currentStage = 0;
-          this.userInterface()
-          // console.log(`1.Животные\n2.Птицы\n3.Рыбы`)
+          this.userInterface()          
           }
         }) 
       } 
@@ -82,6 +85,11 @@ class Controller {
 
   getQuestionValue(numberOfQuestions, maxCount) {
     return Math.floor(maxCount / numberOfQuestions);
+  }
+
+  readThemesFromFile(path) {
+    return this.loadQuest(path)
+    .then(result => result.map(el => JSON.parse(el))).then(result => this.themes = result)
   }
 }
 
