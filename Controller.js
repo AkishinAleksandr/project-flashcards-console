@@ -1,6 +1,5 @@
 const readline = require('readline').createInterface({
-  input: process.stdin,
-  output: process.stdout,
+  input: process.stdin, output: process.stdout,
 });
 const fs = require('fs').promises;
 
@@ -12,16 +11,16 @@ class Controller {
     this.view = view;
     this.currentStage = -1;
     this.themes = [];
-    this.allScore = 0;
+    this.score = 0;
     this.themeCountQuestion = 0;
     this.maxScore = 100;
   }
 
   loadQuest(path) {
     const readFolder = fs.readdir(path, 'utf-8');
-    return readFolder.then((data) => Promise.all(
-      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
-    ));
+    return readFolder
+      .then((data) => Promise
+        .all(data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))));
   }
 
   run() {
@@ -33,7 +32,6 @@ class Controller {
     // this.model.readTopics(this.printTopicsController);
 
     this.readThemesFromFile(path).then((data) => {
-      this.themeCountQuestion = data.length;
       this.userInterface();
     });
   }
@@ -43,22 +41,27 @@ class Controller {
     // а также дождаться ответа последнего
   }
 
-  getArrQuestbyTheme(numburTheme) {
-    return this.themes[numburTheme + 1];
+  getArrQuestbyTheme(chosenThemeNumber) {
+    const theme = this.themes[chosenThemeNumber - 1];
+    this.themeCountQuestion = theme.length;
+    return theme;
   }
 
   askCurrentQuestion(arrRemainQuesh) {
     const objQuestion = arrRemainQuesh.shift();
-    const { question } = objQuestion;
-    const answerQ = objQuestion.answer;
-    console.log(question);
+    const { question, answer } = objQuestion;
 
-    readline.question(`${question}`, (answer) => {
-      if (answer === answerQ) {
-        this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
+    readline.question(`${question} Ответ: `, (readedIn) => {
+      const questionValue = this.getQuestionValue(this.themeCountQuestion, this.maxScore);
+      if (readedIn === answer) {
+        this.allScore(questionValue, this.maxScore);
+        console.log(`Верно, вы заработали ${questionValue} и у вас теперь ${this.score} из возможных ${this.maxScore}`);
+      } else {
+        console.log(`Не верно. Вы могли бы заработать ${questionValue} очков.`);
       }
-      if (arrRemainQuesh.length === 1) {
-        console.log(this.score);
+      if (arrRemainQuesh.length === 0) {
+        console.log(`Вы заработали ${this.score} из ${this.maxScore} возможных`);
+        readline.close();
         return;
       }
       this.askCurrentQuestion(arrRemainQuesh);
@@ -92,7 +95,8 @@ class Controller {
 
   readThemesFromFile(path) {
     return this.loadQuest(path)
-      .then((result) => result.map((el) => JSON.parse(el))).then((result) => this.themes = result);
+      .then((result) => result.map((el) => JSON.parse(el)))
+      .then((result) => this.themes = result);
   }
 
   allScore(countTaskScore, totalTask) {
@@ -100,7 +104,7 @@ class Controller {
 
     this.score += countTaskScore;
     if (this.score > maxScore) {
-      return console.log(this.score)
+      return console.log(this.score);
     }
   }
 }
