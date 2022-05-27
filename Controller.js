@@ -42,18 +42,16 @@ class Controller {
     // а также дождаться ответа последнего
   }
 
-  getArrQuestbyTheme(numburTheme) {
-    return this.themes[numburTheme + 1];
+  getArrQuestbyTheme(chosenThemeNumber) {
+    return this.themes[chosenThemeNumber - 1];
   }
 
   askCurrentQuestion(arrRemainQuesh) {
     const objQuestion = arrRemainQuesh.shift();
-    const { question } = objQuestion;
-    const answerQ = objQuestion.answer;
-    console.log(question);
+    const { question, answer } = objQuestion;
 
-    readline.question(`${question}`, (answer) => {
-      if (answer === answerQ) {
+    readline.question(`${question}`, (readedIn) => {
+      if (readedIn === answer) {
         this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
       }
       if (arrRemainQuesh.length === 1) {
