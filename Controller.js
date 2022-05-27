@@ -1,4 +1,9 @@
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 const fs = require('fs').promises;
+
 const path = './topics';
 
 class Controller {
@@ -15,6 +20,7 @@ class Controller {
         data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))
       );
     });
+
   }
 
  
@@ -33,6 +39,18 @@ class Controller {
     // а также дождаться ответа последнего
   }
 
+  userInterface() {
+    readline.question('Введите Ваше имя: ', (answer) => {
+      if (answer === 'exit') {
+        console.log('Всего доброго!');
+        readline.close();
+      } else {
+        console.log(`Здравствуйте, ${answer}!`);
+        this.userInterface();
+      }
+    });
+  }
+
   getQuestionValue(numberOfQuestions, maxCount) {
     return Math.floor(maxCount / numberOfQuestions);
   }
@@ -41,7 +59,6 @@ class Controller {
     return this.loadQuest(path)
     .then(result => result.map(el => JSON.parse(el))).then(result => this.themes = result)
   }
-
 }
 
 
