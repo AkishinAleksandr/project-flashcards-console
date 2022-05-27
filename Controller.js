@@ -13,6 +13,8 @@ class Controller {
     this.currentStage = -1;
     this.themes = [];
     this.score = 0;
+    this.themeCountQuestion = 0;
+    this.maxScore = 100;
   }
 
   loadQuest(path) {
@@ -28,12 +30,34 @@ class Controller {
     // так как нам нужно отправить сформинованное меню на вывод в экземпляр класса view
     // после того, как завершится асинхронная операция чтения папки
     // Здесь this.printTopicsController — является callback'ом
-    this.model.readTopics(this.printTopicsController);
+    // this.model.readTopics(this.printTopicsController);
+
+    this.readThemesFromFile(path).then((data) => {
+      this.themeCountQuestion = data.length;
+      this.userInterface();
+    });
   }
 
   printTopicsController(topicsMenu) {
     // Тут нужно попросить экземпляр класса view вывести меню пользователю,
     // а также дождаться ответа последнего
+  }
+
+  getArrQuestbyTheme(numburTheme) {
+    return this.themes[numburTheme + 1];
+  }
+
+  askCurrentQuestion(arrRemainQuesh) {
+    const objQuestion = arrRemainQuesh.shift();
+    const { question } = objQuestion;
+    const answerQ = objQuestion.answer;
+
+    readline.question(`${question}`, (answer) => {
+      if (answer === answerQ) {
+        this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
+      }
+      this.askCurrentQuestion(arrRemainQuesh);
+    });
   }
 
   userInterface() {
@@ -51,28 +75,26 @@ class Controller {
     }
 
     if (this.currentStage === 0) {
-      readline.question('1.Животные\n2.Птицы\n3.Рыбы\n', (answer) => {
-        if (answer === 1 || answer === 2 || answer === 3) { this.currentStage = answer; }
+      readline.question('1.Ястребы\n2.Выдры\n3.Еноты\n', (answer) => {
+        if (answer === 1 || answer === 2 || answer === 3) {
+          this.currentStage = answer;
+          this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
+        }
       });
     }
 
     if (this.currentStage === 1) {
-      readline.question('', (answer) => {
 
-      });
+      this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
     }
-
-    if (this.currentStage === 2) {
-      readline.question('', (answer) => {
-
-      });
-    }
-
-    if (this.currentStage === 3) {
-      readline.question('', (answer) => {
-
-      });
-    }
+    //
+    // if (this.currentStage === 2) {
+    //   this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
+    // }
+    //
+    // if (this.currentStage === 3) {
+    //   this.askCurrentQuestion(this.getArrQuestbyTheme(this.currentStage));
+    // }
   }
 
   getQuestionValue(numberOfQuestions, maxCount) {
