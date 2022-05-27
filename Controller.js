@@ -1,13 +1,26 @@
+
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 })
+const fs = require('fs').promises;
+const path = './topics';
 
 
 class Controller {
   constructor(model, view) {
-    this.model = model
-    this.view = view
+    this.model = model;
+    this.view = view;
+  }
+
+  loadQuest() {
+    const readFolder = fs.readdir(path, 'utf-8');
+    console.log(readFolder);
+    readFolder.then((data) => {
+      return Promise.all(
+        data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))
+      );
+    });
   }
 
   run() {
@@ -15,14 +28,15 @@ class Controller {
     // Попутно передаем метод контроллера this.printTopicsController,
     // так как нам нужно отправить сформинованное меню на вывод в экземпляр класса view
     // после того, как завершится асинхронная операция чтения папки
-    // Здесь this.printTopicsController — является callback'ом  
-    this.model.readTopics(this.printTopicsController)
+    // Здесь this.printTopicsController — является callback'ом
+    this.model.readTopics(this.printTopicsController);
   }
 
   printTopicsController(topicsMenu) {
-    // Тут нужно попросить экземпляр класса view вывести меню пользователю, 
+    // Тут нужно попросить экземпляр класса view вывести меню пользователю,
     // а также дождаться ответа последнего
   }
+
 
 
   userInterface() {
@@ -39,4 +53,11 @@ class Controller {
   
 }
 
-module.exports = Controller
+
+  getQuestionValue(numberOfQuestions, maxCount) {
+    return Math.floor(maxCount / numberOfQuestions);
+  }
+
+}
+
+module.exports = Controller;
