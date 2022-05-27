@@ -1,11 +1,10 @@
-
 const readline = require('readline').createInterface({
   input: process.stdin,
-  output: process.stdout
-})
+  output: process.stdout,
+});
 const fs = require('fs').promises;
-const path = './topics';
 
+const path = './topics';
 
 class Controller {
   constructor(model, view) {
@@ -16,11 +15,9 @@ class Controller {
   loadQuest() {
     const readFolder = fs.readdir(path, 'utf-8');
     console.log(readFolder);
-    readFolder.then((data) => {
-      return Promise.all(
-        data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))
-      );
-    });
+    readFolder.then((data) => Promise.all(
+      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
+    ));
   }
 
   run() {
@@ -37,27 +34,21 @@ class Controller {
     // а также дождаться ответа последнего
   }
 
-
-
   userInterface() {
     readline.question('Введите Ваше имя: ', (answer) => {
-      if(answer === 'exit') {
+      if (answer === 'exit') {
         console.log('Всего доброго!');
-        readline.close()
+        readline.close();
       } else {
-        console.log(`Здравствуйте, ${answer}!`)
-        this.userInterface()
+        console.log(`Здравствуйте, ${answer}!`);
+        this.userInterface();
       }
-    })
+    });
   }
-
-}
-
 
   getQuestionValue(numberOfQuestions, maxCount) {
     return Math.floor(maxCount / numberOfQuestions);
   }
-
 }
 
 module.exports = Controller;
