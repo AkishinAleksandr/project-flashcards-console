@@ -1,6 +1,5 @@
 const readline = require('readline').createInterface({
-  input: process.stdin,
-  output: process.stdout,
+  input: process.stdin, output: process.stdout,
 });
 const fs = require('fs').promises;
 
@@ -12,7 +11,7 @@ class Controller {
     this.view = view;
     this.currentStage = -1;
     this.themes = [];
-    this.allScore = 0;
+    this.score = 0;
     this.themeCountQuestion = 0;
     this.maxScore = 100;
   }
@@ -100,7 +99,7 @@ class Controller {
 
     this.score += countTaskScore;
     if (this.score > maxScore) {
-      return console.log(this.score)
+      return console.log(this.score);
     }
   }
 }
