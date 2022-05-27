@@ -95,3 +95,13 @@ class Controller {
 
 
 module.exports = Controller;
+
+let score = 0;
+function allScore (countTaskScore, totalTask) {
+  let maxScore = countTaskScore * totalTask;
+
+  this.allScore = this.allScore + countTaskScore;
+  if (this.allScore > maxScore) {
+    return error;
+  }
+}
