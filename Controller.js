@@ -51,8 +51,12 @@ class Controller {
     const { question, answer } = objQuestion;
 
     readline.question(`${question} Ответ: `, (readedIn) => {
+      const questionValue = this.getQuestionValue(this.themeCountQuestion, this.maxScore);
       if (readedIn === answer) {
-        this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
+        this.allScore(questionValue, this.maxScore);
+        console.log(`Верно, вы заработали ${questionValue} и у вас теперь ${this.score} из возможных ${this.maxScore}`);
+      } else {
+        console.log(`Не верно. Вы могли бы заработать ${questionValue} очков.`);
       }
       if (arrRemainQuesh.length === 0) {
         console.log(`Вы заработали ${this.score} из ${this.maxScore} возможных`);
