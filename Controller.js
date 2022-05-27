@@ -10,15 +10,20 @@ class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+    this.themes = [];
   }
 
-  loadQuest() {
+  loadQuest(path) {
     const readFolder = fs.readdir(path, 'utf-8');
-    console.log(readFolder);
-    readFolder.then((data) => Promise.all(
-      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
-    ));
+    return readFolder.then((data) => {
+      return Promise.all(
+        data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))
+      );
+    });
+
   }
+
+ 
 
   run() {
     // Просим экземпляр класса модели прочитать папку со всеми темами и составить меню.
@@ -49,6 +54,12 @@ class Controller {
   getQuestionValue(numberOfQuestions, maxCount) {
     return Math.floor(maxCount / numberOfQuestions);
   }
+
+  readThemesFromFile(path) {
+    return this.loadQuest(path)
+    .then(result => result.map(el => JSON.parse(el))).then(result => this.themes = result)
+  }
 }
+
 
 module.exports = Controller;
