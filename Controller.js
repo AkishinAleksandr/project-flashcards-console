@@ -32,7 +32,7 @@ class Controller {
         readline.close()
       } else {
         console.log(`Здравствуйте, ${answer}!`)
-        message()
+        userInterface()
       }
     })
   }
