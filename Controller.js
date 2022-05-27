@@ -30,6 +30,11 @@ class Controller {
     // Тут нужно попросить экземпляр класса view вывести меню пользователю,
     // а также дождаться ответа последнего
   }
+
+  getQuestionValue(numberOfQuestions, maxCount) {
+    return Math.floor(maxCount / numberOfQuestions);
+  }
+
 }
 
 module.exports = Controller;
