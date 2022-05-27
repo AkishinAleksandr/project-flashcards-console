@@ -18,9 +18,9 @@ class Controller {
 
   loadQuest(path) {
     const readFolder = fs.readdir(path, 'utf-8');
-    return readFolder.then((data) => Promise.all(
-      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
-    ));
+    return readFolder
+      .then((data) => Promise
+        .all(data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8'))));
   }
 
   run() {
@@ -89,7 +89,8 @@ class Controller {
 
   readThemesFromFile(path) {
     return this.loadQuest(path)
-      .then((result) => result.map((el) => JSON.parse(el))).then((result) => this.themes = result);
+      .then((result) => result.map((el) => JSON.parse(el)))
+      .then((result) => this.themes = result);
   }
 
   allScore(countTaskScore, totalTask) {
