@@ -54,7 +54,7 @@ class Controller {
       if (readedIn === answer) {
         this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
       }
-      if (arrRemainQuesh.length === 1) {
+      if (arrRemainQuesh.length === 0) {
         console.log(`Вы заработали ${this.score} из ${this.maxScore} возможных`);
         readline.close();
         return;
