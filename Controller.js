@@ -15,9 +15,9 @@ class Controller {
   loadQuest() {
     const readFolder = fs.readdir(path, 'utf-8');
     console.log(readFolder);
-    readFolder.then((data) => Promise.all(
-      data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')),
-    ));
+    readFolder.then((data) =>
+      Promise.all(data.map((el) => fs.readFile(`${path}/${el}`, 'utf-8')))
+    );
   }
 
   run() {
@@ -52,3 +52,13 @@ class Controller {
 }
 
 module.exports = Controller;
+
+let score = 0;
+function allScore (countTaskScore, totalTask) {
+  let maxScore = countTaskScore * totalTask;
+
+  this.allScore = this.allScore + countTaskScore;
+  if (this.allScore > maxScore) {
+    return error;
+  }
+}
