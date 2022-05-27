@@ -56,6 +56,7 @@ class Controller {
       }
       if (arrRemainQuesh.length === 1) {
         console.log(`Вы заработали ${this.score} из ${this.maxScore} возможных`);
+        readline.close();
         return;
       }
       this.askCurrentQuestion(arrRemainQuesh);
