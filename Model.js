@@ -1,7 +1,5 @@
 class Model {
-  constructor() {
-
-  }
+  constructor() {}
 }
 
-module.exports = Model
+module.exports = Model;
