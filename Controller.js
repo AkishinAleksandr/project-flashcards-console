@@ -32,7 +32,6 @@ class Controller {
     // this.model.readTopics(this.printTopicsController);
 
     this.readThemesFromFile(path).then((data) => {
-      this.themeCountQuestion = data.length;
       this.userInterface();
     });
   }
@@ -43,7 +42,9 @@ class Controller {
   }
 
   getArrQuestbyTheme(chosenThemeNumber) {
-    return this.themes[chosenThemeNumber - 1];
+    const theme = this.themes[chosenThemeNumber - 1];
+    this.themeCountQuestion = theme.length;
+    return theme;
   }
 
   askCurrentQuestion(arrRemainQuesh) {
