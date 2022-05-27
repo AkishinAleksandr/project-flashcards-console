@@ -50,12 +50,12 @@ class Controller {
     const objQuestion = arrRemainQuesh.shift();
     const { question, answer } = objQuestion;
 
-    readline.question(`${question}`, (readedIn) => {
+    readline.question(`${question} Ответ: `, (readedIn) => {
       if (readedIn === answer) {
         this.allScore(this.getQuestionValue(this.themeCountQuestion, this.maxScore), this.maxScore);
       }
       if (arrRemainQuesh.length === 1) {
-        console.log(this.score);
+        console.log(`Вы заработали ${this.score} из ${this.maxScore} возможных`);
         return;
       }
       this.askCurrentQuestion(arrRemainQuesh);
