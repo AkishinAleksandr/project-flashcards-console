@@ -1,3 +1,9 @@
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+
 class Controller {
   constructor(model, view) {
     this.model = model
@@ -18,6 +24,18 @@ class Controller {
     // а также дождаться ответа последнего
   }
 
+
+  userInterface() {
+    readline.question('Введите Ваше имя: ', (answer) => {
+      if(answer === 'exit') {
+        console.log('Всего доброго!');
+        readline.close()
+      } else {
+        console.log(`Здравствуйте, ${answer}!`)
+        message()
+      }
+    })
+  }
   
 }
 
