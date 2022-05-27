@@ -46,11 +46,11 @@ class Controller {
         readline.close()
       } else {
         console.log(`Здравствуйте, ${answer}!`)
-        userInterface()
+        this.userInterface()
       }
     })
   }
-  
+
 }
 
 
